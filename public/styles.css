@@ -8,7 +8,7 @@
 }
 
 #custom-button:hover {
-    background-color: rgb(144, 103, 103);
+    background-color: rgb(45, 30, 30);
 }
 
 #custom-text {
@@ -29,7 +29,7 @@
 }
 
 body {
-    background-color: #201717;
+    background-color: #131111;
     padding-top: 80px;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -38,7 +38,7 @@ body {
 header {
     margin: 0;
     padding: 15px 30px;
-    background-color: #2e1212;
+    background-color: #2e1515;
     width: 100%;
     position: fixed;
     top: 0;
@@ -191,7 +191,7 @@ header {
 }
 
 .file-item {
-    background: #2d2d2d;
+    background: #2b2b2b;
     border-radius: 12px;
     padding: 15px;
     position: relative;
@@ -234,7 +234,7 @@ header {
     right: 10px;
     width: 40px;
     height: 40px;
-    background-color: #1ed760;
+    background-color: #872a2a;
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -278,7 +278,7 @@ border: 1px solid #ddd;
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #ff4444;
+    background-color: #382727;
     color: white;
     padding: 16px 24px;
     border-radius: 8px;
@@ -291,12 +291,12 @@ border: 1px solid #ddd;
 
 .snackbar.uploading {
     display: block;
-    background-color: #ff4444;
+    background-color: #221a1a;
 }
 
 .snackbar.complete {
     display: block;
-    background-color: #00C851;
+    background-color: #49b0c7;
 }
 
 .snackbar-content {
@@ -332,7 +332,7 @@ border: 1px solid #ddd;
     left: 0;
     right: 0;
     height: 90px;
-    background: #2e1212;
+    background: #150606;
     border-top: 1px solid #404040;
     display: flex;
     align-items: center;
@@ -457,7 +457,7 @@ border: 1px solid #ddd;
     left: 0;
     top: 0;
     height: 100%;
-    background: #742626;
+    background: #804141;
     border-radius: 2px;
     width: 0%;
 }
@@ -479,7 +479,7 @@ border: 1px solid #ddd;
 .volume-slider {
     width: 100px;
     height: 4px;
-    background: #404040;
+    background: #909090;
     border-radius: 2px;
     cursor: pointer;
     position: relative;
@@ -490,7 +490,7 @@ border: 1px solid #ddd;
     left: 0;
     top: 0;
     height: 100%;
-    background: #1db954;
+    background: #804141;
     border-radius: 2px;
     width: 50%;
 }
@@ -514,7 +514,7 @@ border: 1px solid #ddd;
 }
 
 .modal-content {
-    background: #282828;
+    background: #1a0303;
     padding: 2rem;
     border-radius: 8px;
     width: 90%;
@@ -592,12 +592,12 @@ border: 1px solid #ddd;
 
 .modal-body input[type="text"]:focus {
     outline: none;
-    border-color: #1ed760;
+    border-color: #d71eac;
 }
 
 .modal-body input[type="file"]:focus {
     outline: none;
-    border-color: #1ed760;
+    border-color: #d7d11e;
 }
 
 .date-display {
@@ -631,7 +631,7 @@ border: 1px solid #ddd;
 }
 
 .modal-actions button.upload {
-    background: #1ed760;
+    background: #4e8d9d;
     color: black;
 }
 

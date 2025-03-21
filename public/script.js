@@ -529,7 +529,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // Add easter egg functionality
 document.querySelector('.app-name').addEventListener('click', function(event) {
     if (event.shiftKey) {
-        showSnackbar("Made By Hamish & Will, btw Miku is goated!", false);
+        showSnackbar("Made By Rebecca Skittles & HAMisMAD btw Hatsune Miku is GOATED!!!", false);
     }
 });
 

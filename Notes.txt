@@ -20,3 +20,8 @@ Muggo, if you could pls add these to our website that'd be great 😊
     ------
 
     git pull origin main  = pull chnages from github
+
+
+    --- Start server ---
+    
+    node ./backend/server.js
