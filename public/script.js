@@ -4,6 +4,7 @@ const uploadedFiles = document.getElementById("uploadedFiles");
 const snackbar = document.getElementById("snackbar");
 const snackbarMessage = snackbar.querySelector(".snackbar-message");
 const progressBar = snackbar.querySelector(".progress-bar");
+const playerBar = document.querySelector('.player-bar');
 
 // Add this at the top of the file with other global variables
 let currentlyPlayingAudio = null;
@@ -22,6 +23,7 @@ function openUploadModal() {
     
     dateDisplay.textContent = today;
     modal.classList.add('active');
+    togglePlayerBar(false); // Hide player bar when modal opens
 }
 
 function closeUploadModal() {
@@ -30,6 +32,11 @@ function closeUploadModal() {
     
     modal.classList.remove('active');
     form.reset();
+    
+    // Show player bar if a song is playing
+    if (isPlaying && currentAudio) {
+        togglePlayerBar(true);
+    }
 }
 
 // Function to show snackbar
@@ -165,7 +172,10 @@ function displayUploadedFile(song) {
     // Create play button
     const playButton = document.createElement("button");
     playButton.classList.add("play-button");
-    playButton.innerHTML = '<i class="fas fa-play" style="color: white;"></i>';
+    const playIcon = document.createElement("img");
+    playIcon.src = "img/play_btn.png";
+    playIcon.alt = "Play";
+    playButton.appendChild(playIcon);
     
     // Create audio element
     const audio = new Audio(`/uploads/${song.audioFile}`);
@@ -179,22 +189,40 @@ function displayUploadedFile(song) {
     
     // Add click handler for the song card
     fileItem.addEventListener('click', () => {
-        if (currentAudio) {
-            currentAudio.pause();
-            if (currentlyPlayingButton) {
-                currentlyPlayingButton.classList.remove("playing");
-            }
+        // Stop currently playing audio if any
+        if (currentlyPlayingAudio) {
+            currentlyPlayingAudio.pause();
+            currentlyPlayingButton.classList.remove("playing");
         }
         
+        // If clicking the same song that's currently playing, just pause it
+        if (currentAudio === audio) {
+            currentAudio.pause();
+            isPlaying = false;
+            document.getElementById('mainPlayButton').innerHTML = '<i class="fas fa-play"></i>';
+            playButton.classList.remove("playing");
+            playIcon.src = "img/play_btn.png";
+            currentAudio = null;
+            currentlyPlayingAudio = null;
+            currentlyPlayingButton = null;
+            updatePlayerInfo("No song selected", "Artist");
+            togglePlayerBar(false); // Hide player bar when pausing
+            return;
+        }
+        
+        // Start playing the new song
         currentAudio = audio;
         currentSongIndex = songList.indexOf(song);
         updatePlayerInfo(song.name, song.artist, song.coverImage);
+        audio.currentTime = 0;
         audio.play();
         isPlaying = true;
         document.getElementById('mainPlayButton').innerHTML = '<i class="fas fa-pause"></i>';
         playButton.classList.add("playing");
+        playIcon.src = "img/pause_btn.png";
         currentlyPlayingButton = playButton;
         currentlyPlayingAudio = audio;
+        togglePlayerBar(true); // Show player bar when playing
     });
     
     playButton.onclick = (e) => {
@@ -202,17 +230,21 @@ function displayUploadedFile(song) {
         if (currentlyPlayingAudio === audio) {
             audio.pause();
             playButton.classList.remove("playing");
+            playIcon.src = "img/play_btn.png";
             currentlyPlayingAudio = null;
             currentlyPlayingButton = null;
             isPlaying = false;
             document.getElementById('mainPlayButton').innerHTML = '<i class="fas fa-play"></i>';
+            togglePlayerBar(false); // Hide player bar when pausing
         } else {
             if (currentlyPlayingAudio) {
                 currentlyPlayingAudio.pause();
                 currentlyPlayingButton.classList.remove("playing");
             }
+            audio.currentTime = 0;
             audio.play();
             playButton.classList.add("playing");
+            playIcon.src = "img/pause_btn.png";
             currentlyPlayingAudio = audio;
             currentlyPlayingButton = playButton;
             isPlaying = true;
@@ -220,12 +252,14 @@ function displayUploadedFile(song) {
             currentAudio = audio;
             currentSongIndex = songList.indexOf(song);
             updatePlayerInfo(song.name, song.artist, song.coverImage);
+            togglePlayerBar(true); // Show player bar when playing
         }
     };
 
     // Handle audio ended event
     audio.addEventListener("ended", () => {
         playButton.classList.remove("playing");
+        playIcon.src = "img/play_btn.png";
         currentlyPlayingAudio = null;
         currentlyPlayingButton = null;
         isPlaying = false;
@@ -233,6 +267,7 @@ function displayUploadedFile(song) {
         if (currentAudio === audio) {
             currentAudio = null;
             updatePlayerInfo("No song selected", "Artist");
+            togglePlayerBar(false); // Hide player bar when song ends
         }
     });
 
@@ -497,3 +532,12 @@ document.querySelector('.app-name').addEventListener('click', function(event) {
         showSnackbar("Made By Hamish & Will, btw Miku is goated!", false);
     }
 });
+
+// Function to show/hide player bar
+function togglePlayerBar(show) {
+    if (show) {
+        playerBar.classList.add('visible');
+    } else {
+        playerBar.classList.remove('visible');
+    }
+}

@@ -38,7 +38,7 @@ body {
 header {
     margin: 0;
     padding: 15px 30px;
-    background-color: #3b1616;
+    background-color: #2e1212;
     width: 100%;
     position: fixed;
     top: 0;
@@ -247,8 +247,10 @@ header {
     transform: translateY(10px);
 }
 
-.file-item .play-button i {
-    color: white;
+.file-item .play-button img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
 .file-item:hover .play-button {
@@ -258,19 +260,6 @@ header {
 
 .file-item .play-button:hover {
     transform: scale(1.1);
-}
-
-.file-item .play-button.playing::before {
-    content: '';
-    width: 4px;
-    height: 16px;
-    background-color: #ffffff;
-    margin: 0 2px;
-    border-radius: 2px;
-}
-
-.file-item .play-button:not(.playing)::before {
-    display: none;
 }
 
 #searchResults {
@@ -343,13 +332,27 @@ border: 1px solid #ddd;
     left: 0;
     right: 0;
     height: 90px;
-    background: #3e0f0f;
+    background: #2e1212;
     border-top: 1px solid #404040;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 16px;
     z-index: 1000;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    visibility: hidden;
+}
+
+.player-bar.visible {
+    transform: translateY(0);
+    visibility: visible;
+}
+
+/* When modal is active, ensure player bar is hidden */
+.modal.active ~ .player-bar {
+    transform: translateY(100%);
+    visibility: hidden;
 }
 
 .player-left {
