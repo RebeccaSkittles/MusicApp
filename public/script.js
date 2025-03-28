@@ -169,6 +169,11 @@ function displayUploadedFile(song) {
     const uploadDate = new Date(song.uploadDate).toLocaleDateString();
     songInfo.textContent = `${song.artist} • ${uploadDate}`;
 
+    // Create tag pill element
+    const tagPill = document.createElement("div");
+    tagPill.classList.add("tag-pill");
+    tagPill.textContent = song.tag || "Uncategorized";
+
     // Create play button
     const playButton = document.createElement("button");
     playButton.classList.add("play-button");
@@ -193,6 +198,11 @@ function displayUploadedFile(song) {
         if (currentlyPlayingAudio) {
             currentlyPlayingAudio.pause();
             currentlyPlayingButton.classList.remove("playing");
+            // Update the previous button's icon back to play
+            const prevPlayIcon = currentlyPlayingButton.querySelector('img');
+            if (prevPlayIcon) {
+                prevPlayIcon.src = "img/play_btn.png";
+            }
         }
         
         // If clicking the same song that's currently playing, just pause it
@@ -240,6 +250,11 @@ function displayUploadedFile(song) {
             if (currentlyPlayingAudio) {
                 currentlyPlayingAudio.pause();
                 currentlyPlayingButton.classList.remove("playing");
+                // Update the previous button's icon back to play
+                const prevPlayIcon = currentlyPlayingButton.querySelector('img');
+                if (prevPlayIcon) {
+                    prevPlayIcon.src = "img/play_btn.png";
+                }
             }
             audio.currentTime = 0;
             audio.play();
@@ -277,6 +292,7 @@ function displayUploadedFile(song) {
     fileItem.appendChild(coverContainer);
     fileItem.appendChild(songName);
     fileItem.appendChild(songInfo);
+    fileItem.appendChild(tagPill);
 
     uploadedFiles.appendChild(fileItem);
     songList.push(song);

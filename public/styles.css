@@ -648,3 +648,14 @@ border: 1px solid #ddd;
     border-radius: 8px;
     margin: 1rem 0;
 }
+
+.tag-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    background-color: #e0e0e0;
+    color: #666;
+    border-radius: 16px;
+    font-size: 0.8em;
+    margin-top: 8px;
+    font-weight: 500;
+}

@@ -6,7 +6,8 @@
       "artist": "The Living Tomb Stone",
       "audioFile": "1742463836879-409091737-icantfixyou_ntfull.mp3",
       "coverImage": "/uploads/1742463843045-642076263-temp_image_B9C690D1-4946-47C1-9D12-FD8F2C767D1D.png",
-      "uploadDate": "2025-03-20T09:44:03.049Z"
+      "uploadDate": "2025-03-20T09:44:03.049Z",
+      "tag": "FNAF"
     },
     {
       "id": "1742464931547",
@@ -14,7 +15,8 @@
       "artist": "Kansae Teto",
       "audioFile": "1742464927045-286169830-Honestly_Teto.mp3",
       "coverImage": "/uploads/1742464931544-591741857-1200x1200bb.jpg",
-      "uploadDate": "2025-03-20T10:02:11.547Z"
+      "uploadDate": "2025-03-20T10:02:11.547Z",
+      "tag": "Vocaloid"
     },
     {
       "id": "1742529259415",
@@ -22,7 +24,8 @@
       "artist": "Some guy on an internet soundboard",
       "audioFile": "1742529259407-503545639-tuco-get-out.mp3",
       "coverImage": "/uploads/1742529259408-407183763-Critical_hit.jpg",
-      "uploadDate": "2025-03-21T03:54:19.415Z"
+      "uploadDate": "2025-03-21T03:54:19.415Z",
+      "tag": "Meme"
     }
   ]
 }
