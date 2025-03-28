@@ -169,10 +169,25 @@ function displayUploadedFile(song) {
     const uploadDate = new Date(song.uploadDate).toLocaleDateString();
     songInfo.textContent = `${song.artist} • ${uploadDate}`;
 
-    // Create tag pill element
-    const tagPill = document.createElement("div");
-    tagPill.classList.add("tag-pill");
-    tagPill.textContent = song.tag || "Uncategorized";
+    // Create tags container
+    const tagsContainer = document.createElement("div");
+    tagsContainer.classList.add("tags-container");
+
+    // Create tag pills for each tag
+    if (song.tags && song.tags.length > 0) {
+        song.tags.forEach(tag => {
+            const tagPill = document.createElement("div");
+            tagPill.classList.add("tag-pill");
+            tagPill.textContent = tag;
+            tagsContainer.appendChild(tagPill);
+        });
+    } else {
+        // If no tags, show "Uncategorized"
+        const tagPill = document.createElement("div");
+        tagPill.classList.add("tag-pill");
+        tagPill.textContent = "Uncategorized";
+        tagsContainer.appendChild(tagPill);
+    }
 
     // Create play button
     const playButton = document.createElement("button");
@@ -204,96 +219,38 @@ function displayUploadedFile(song) {
                 prevPlayIcon.src = "img/play_btn.png";
             }
         }
-        
-        // If clicking the same song that's currently playing, just pause it
-        if (currentAudio === audio) {
-            currentAudio.pause();
-            isPlaying = false;
-            document.getElementById('mainPlayButton').innerHTML = '<i class="fas fa-play"></i>';
-            playButton.classList.remove("playing");
-            playIcon.src = "img/play_btn.png";
-            currentAudio = null;
-            currentlyPlayingAudio = null;
-            currentlyPlayingButton = null;
-            updatePlayerInfo("No song selected", "Artist");
-            togglePlayerBar(false); // Hide player bar when pausing
-            return;
-        }
-        
-        // Start playing the new song
-        currentAudio = audio;
-        currentSongIndex = songList.indexOf(song);
-        updatePlayerInfo(song.name, song.artist, song.coverImage);
-        audio.currentTime = 0;
-        audio.play();
-        isPlaying = true;
-        document.getElementById('mainPlayButton').innerHTML = '<i class="fas fa-pause"></i>';
-        playButton.classList.add("playing");
-        playIcon.src = "img/pause_btn.png";
-        currentlyPlayingButton = playButton;
+
+        // Update currently playing audio and button
         currentlyPlayingAudio = audio;
-        togglePlayerBar(true); // Show player bar when playing
-    });
-    
-    playButton.onclick = (e) => {
-        e.stopPropagation();
-        if (currentlyPlayingAudio === audio) {
-            audio.pause();
-            playButton.classList.remove("playing");
-            playIcon.src = "img/play_btn.png";
-            currentlyPlayingAudio = null;
-            currentlyPlayingButton = null;
-            isPlaying = false;
-            document.getElementById('mainPlayButton').innerHTML = '<i class="fas fa-play"></i>';
-            togglePlayerBar(false); // Hide player bar when pausing
-        } else {
-            if (currentlyPlayingAudio) {
-                currentlyPlayingAudio.pause();
-                currentlyPlayingButton.classList.remove("playing");
-                // Update the previous button's icon back to play
-                const prevPlayIcon = currentlyPlayingButton.querySelector('img');
-                if (prevPlayIcon) {
-                    prevPlayIcon.src = "img/play_btn.png";
-                }
-            }
-            audio.currentTime = 0;
+        currentlyPlayingButton = playButton;
+
+        // Toggle play/pause
+        if (audio.paused) {
             audio.play();
             playButton.classList.add("playing");
             playIcon.src = "img/pause_btn.png";
-            currentlyPlayingAudio = audio;
-            currentlyPlayingButton = playButton;
-            isPlaying = true;
-            document.getElementById('mainPlayButton').innerHTML = '<i class="fas fa-pause"></i>';
-            currentAudio = audio;
-            currentSongIndex = songList.indexOf(song);
-            updatePlayerInfo(song.name, song.artist, song.coverImage);
-            togglePlayerBar(true); // Show player bar when playing
+        } else {
+            audio.pause();
+            playButton.classList.remove("playing");
+            playIcon.src = "img/play_btn.png";
         }
-    };
 
-    // Handle audio ended event
-    audio.addEventListener("ended", () => {
-        playButton.classList.remove("playing");
-        playIcon.src = "img/play_btn.png";
-        currentlyPlayingAudio = null;
-        currentlyPlayingButton = null;
-        isPlaying = false;
-        document.getElementById('mainPlayButton').innerHTML = '<i class="fas fa-play"></i>';
-        if (currentAudio === audio) {
-            currentAudio = null;
-            updatePlayerInfo("No song selected", "Artist");
-            togglePlayerBar(false); // Hide player bar when song ends
-        }
+        // Update player bar
+        currentAudio = audio;
+        isPlaying = !audio.paused;
+        updatePlayerInfo(song.name, song.artist, song.coverImage);
+        togglePlayerBar(true);
     });
 
-    // Append all elements
+    // Append elements to the file item
     coverContainer.appendChild(coverImage);
     coverContainer.appendChild(playButton);
     fileItem.appendChild(coverContainer);
     fileItem.appendChild(songName);
     fileItem.appendChild(songInfo);
-    fileItem.appendChild(tagPill);
+    fileItem.appendChild(tagsContainer);
 
+    // Append the file item to the uploaded files container
     uploadedFiles.appendChild(fileItem);
     songList.push(song);
 }
